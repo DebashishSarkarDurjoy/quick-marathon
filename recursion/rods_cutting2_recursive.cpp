@@ -48,9 +48,9 @@ private:
         for (int len = 1; len <= n; len++) {
             int ans = INT_MIN;
             for (int i = 0; i < len; i++) {
-                int cut = (i+1);
-                int current_ans = this->prices[i] + dp[len-cut];
-                ans = max(ans, current_ans);
+                int cut = i + 1;
+                int current_ans = dp[len-cut] + this->prices[i];
+                ans = max(current_ans, ans);
             }
             dp[len] = ans;
         }
