@@ -22,7 +22,7 @@ private:
         return ans;
     }
 
-    // dynamic / memoisation
+    // dynamic / memoisation top down
     int maxProfit2(int n, vector<int> &dp) {
         // base case
         if (n == 0) return 0;
@@ -41,6 +41,24 @@ private:
         return ans;
     }
 
+    // dynamic / memoisation bottom up
+    int maxProfit3(int n) {
+        vector<int> dp(n+1, 0);
+
+        for (int len = 1; len <= n; len++) {
+            int ans = INT_MIN;
+            for (int i = 0; i < len; i++) {
+                int cut = (i+1);
+                int current_ans = this->prices[i] + dp[len-cut];
+                ans = max(ans, current_ans);
+            }
+            dp[len] = ans;
+        }
+
+        return dp[n];
+    }
+
+
 public:
     Solution() {
         this->prices = {1,5,8,9,10,17,17,20};
@@ -48,12 +66,16 @@ public:
     }
 
     int maxProfit() {
-        return maxProfit_recursive(this->n);
+        return this->maxProfit_recursive(this->n);
     }
 
     int maxProfit_TD() {
         vector<int> dp(this->n, 0);
-        return maxProfit2(this->n, dp);
+        return this->maxProfit2(this->n, dp);
+    }
+
+    int maxProfit_BU() {
+        return this->maxProfit3(this->n);
     }
     
 };
@@ -65,7 +87,7 @@ int main(void) {
 
     Solution s;
 
-    cout << s.maxProfit_TD() << endl;
+    cout << s.maxProfit_BU() << endl;
 
     return 0;
 }
