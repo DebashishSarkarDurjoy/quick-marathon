@@ -58,6 +58,33 @@ bool search(int num, Node* node) {
     return isFound;
 }
 
+int findClosest(Node* node, int target) {
+    int closest;
+    int diff = INT_MAX;
+
+    Node* temp = node;
+
+    while (temp != NULL) {
+        int current_diff = abs(temp->data - target);
+
+        if (current_diff == 0) return temp->data;
+
+        if (current_diff < diff) {
+            diff = current_diff;
+            closest = temp->data;
+        }
+
+        if (target < temp->data) {
+            temp = temp->left;
+        }
+        else {
+            temp = temp->right;
+        }
+    }
+
+    return closest;
+}
+
 int main(void) {
     Node* root1 = NULL;
     int arr[] = { 8, 10, 3, 5, 6, 11, 9, 7, 1, 13, 15, 4 };
@@ -69,10 +96,16 @@ int main(void) {
     printBST(root1);
     cout << endl;
 
+    // int toSearch;
+    // cout << "Search: ";
+    // cin >> toSearch;
+    // cout << (search(toSearch, root1) ? "Found" : "Not Found") << endl; 
+
+
     int toSearch;
     cout << "Search: ";
     cin >> toSearch;
-    cout << (search(toSearch, root1) ? "Found" : "Not Found") << endl; 
+    cout << findClosest(root1, toSearch) << endl;
 
     return 0;
 }
