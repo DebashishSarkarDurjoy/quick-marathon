@@ -34,6 +34,20 @@ void levelOrderPrint(Node* root) {
     }
 }
 
+pair<int, bool> heightBalanced(Node* root) {
+    if (root == NULL) return make_pair(0, true);
+
+    pair<int, bool> leftPair = heightBalanced(root->left);
+    pair<int, bool> rightPair = heightBalanced(root->right);
+
+    int newHeight = 1 + max(leftPair.first, rightPair.first);
+    bool isBalanced = false;
+    if ( abs(leftPair.first - rightPair.first) <= 1 && (leftPair.second && rightPair.second) ) {
+        isBalanced = true;
+        return make_pair(newHeight, isBalanced);
+    }
+    return make_pair(newHeight, isBalanced);
+}
 
 int main(void) {
     Node* root;
@@ -45,11 +59,16 @@ int main(void) {
     root->right->right = new Node(6);
     root->left->right = new Node(5);
     root->left->right->left = new Node(7);
-    root->left->right->right = new Node(8);
-    root->left->right->right->left = new Node(9);
-    root->left->right->right->right = new Node(10);
+    // root->left->right->right = new Node(8);
+    // root->left->right->right->left = new Node(9);
+    // root->left->right->right->right = new Node(10);
 
     levelOrderPrint(root);
+    cout << endl;
+
+    pair<int, bool> p = heightBalanced(root);
+    cout << "Height Balanced: " << (p.second ? "True" : "False") << endl;
+    cout << "Height: " << p.first << endl;
 
     return 0;
 }
