@@ -39,6 +39,25 @@ void printBST(Node* node) {
 
 }
 
+bool search(int num, Node* node) {
+    // base case
+    if (node == NULL) return false;
+
+    // recursive case
+    bool isFound = false;
+    if (node->data > num) {
+        isFound = search(num, node->left);
+    }
+    else if (node->data < num) {
+        isFound = search(num, node->right);
+    }
+    else {
+        isFound = true;
+    }
+
+    return isFound;
+}
+
 int main(void) {
     Node* root1 = NULL;
     int arr[] = { 8, 10, 3, 5, 6, 11, 9, 7, 1, 13, 15, 4 };
@@ -49,6 +68,11 @@ int main(void) {
 
     printBST(root1);
     cout << endl;
+
+    int toSearch;
+    cout << "Search: ";
+    cin >> toSearch;
+    cout << (search(toSearch, root1) ? "Found" : "Not Found") << endl; 
 
     return 0;
 }
