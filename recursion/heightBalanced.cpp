@@ -49,6 +49,28 @@ pair<int, bool> heightBalanced(Node* root) {
     return make_pair(newHeight, isBalanced);
 }
 
+void levelOrderBuild(Node* root) {
+    queue<Node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        Node* f = q.front();
+        q.pop();
+
+        int left, right;
+        cin >> left >> right;
+
+        if (left != -1) {
+            f->left = new Node(left);
+            q.push(f->left);
+        }
+        if (right != -1) {
+            f->right = new Node(right);
+            q.push(f->right);
+        }
+    }
+}
+
 int main(void) {
     Node* root;
 
@@ -69,6 +91,10 @@ int main(void) {
     pair<int, bool> p = heightBalanced(root);
     cout << "Height Balanced: " << (p.second ? "True" : "False") << endl;
     cout << "Height: " << p.first << endl;
+
+    cout << endl;
+    levelOrderPrint(root);
+    cout << endl;
 
     return 0;
 }
