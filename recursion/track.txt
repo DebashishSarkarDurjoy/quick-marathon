@@ -2,4 +2,6 @@ rods_cutting2_recursive - bottom up
 binaryTree
 binaryTreeBoilerPlate
 heightBalanced
-Binary Search Tree: insertIntoBST, printBST
+Binary Search Tree: insertIntoBST, printBST, closest, minHeightBST - need to debug - watch video
+
+
