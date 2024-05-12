@@ -4,5 +4,8 @@ binaryTreeBoilerPlate
 heightBalanced
 Binary Search Tree: insertIntoBST, printBST, closest, minHeightBST - need to debug - watch video
 Trie: SuffixTrie: Suggestions, PrefixTrie: Suggestions - next Board 
+Priority Queue: Running Median - next findingCabs
+Hashing: GPTriplets, countingTriangles, countRect - work in progress
+
 
 
