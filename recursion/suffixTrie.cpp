@@ -9,10 +9,12 @@ public:
     char c;
     unordered_map<char, Node*> m;
     bool isTerminal;
+    string word;
 
     Node (char c) {
         this->c = c;
         this->isTerminal = false;
+        this->word = "";
     }
 
 };
@@ -32,6 +34,23 @@ private:
         }
 
         temp->isTerminal = true;
+        temp->word = word;
+    }
+
+    void possibleWords_rec(vector<string> &result, Node* node) {
+        if (node->m.empty()) {
+            result.push_back(node->word);
+            return;
+        }
+
+        if (node->isTerminal) {
+            result.push_back(node->word);
+        }
+
+        for (auto it: node->m) {
+            Node* temp = it.second;
+            possibleWords_rec(result, temp);
+        }
     }
 
 public:
@@ -40,15 +59,15 @@ public:
     }
 
     // picking all possible substrings of word
-    void insert(string word) {
-        for (int i = 0; word[i] != '\0'; i++) {
-            this->insert_helper(word.substr(i));
-        }
-    }
-
     // void insert(string word) {
-    //     this->insert_helper(word);
+    //     for (int i = 0; word[i] != '\0'; i++) {
+    //         this->insert_helper(word.substr(i));
+    //     }
     // }
+
+    void insert(string word) {
+        this->insert_helper(word);
+    }
 
     bool search(string word) {
         Node* temp = root;
@@ -60,6 +79,21 @@ public:
 
         return temp->isTerminal;
     }
+
+    vector<string> possibleWords(string word) {
+        Node* temp = this->root;
+        vector<string> result;
+
+        for (char c: word) {
+            if ( temp->m.count(c) != 0 ) {
+                temp = temp->m[c];
+            }
+        }
+
+        possibleWords_rec(result, temp);
+
+        return result;
+    }
 };
 
 int main(void) {
@@ -70,12 +104,21 @@ int main(void) {
         t.insert(word);
     }
 
-    string input = "";
-    do {
-        cin >> input;
-        cout << (t.search(input) ? "Found": "Not Found") << endl;
-    } while (input != "!");
+    // string input = "";
+    // do {
+    //     cin >> input;
+    //     cout << (t.search(input) ? "Found": "Not Found") << endl;
+    // } while (input != "!");
 
+
+    cout << "Find possible words: " << endl;
+    string input = "";
+    cin >> input;
+    vector<string> results = t.possibleWords(input);
+    for (string word: results) {
+        cout << word << ", ";
+    }
+    cout << endl;
 
     return 0;
 }
